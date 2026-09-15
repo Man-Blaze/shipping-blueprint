@@ -93,12 +93,12 @@
     <div class="footer-inner">
       <div class="footer-col">
         <h4 class="company-name">Example Shipping Co</h4>
-        <p>Port Vila, Vanuatu</p>
+        <p class="footer-address">Port Vila, Vanuatu</p>
       </div>
       <div class="footer-col">
         <h4 data-i18n="nav.contact">Contact</h4>
-        <p>📞 +678 XXXX XXX</p>
-        <p>✉️ info@example.vu</p>
+        <p class="footer-phone">📞 +678 XXXX XXX</p>
+        <p class="footer-email">✉️ info@example.vu</p>
       </div>
       <div class="footer-col">
         <h4 data-i18n="footer.language">Language</h4>
@@ -114,22 +114,9 @@
     </div>
   </footer>
 
-  <script src="../i18n.js"></script>
-  <script>
-    (async () => {
-      await i18n.initI18n();
-      document.querySelectorAll('.lang-switcher button').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === i18n.getLang());
-      });
-      const originalSetLang = i18n.setLang;
-      i18n.setLang = function(lang) {
-        originalSetLang(lang);
-        document.querySelectorAll('.lang-switcher button').forEach(btn => {
-          btn.classList.toggle('active', btn.dataset.lang === lang);
-        });
-      };
-    })();
-  </script>
+    <script src="../i18n.js"></script>
+    <script src="../assets/js/app.js"></script>
+    <script src="../assets/js/public-data.js"></script>
 
 </body>
 </html>

@@ -7,32 +7,27 @@
   <meta name="keywords" content="Vanuatu shipping, inter-island, cargo, passenger, Tanna, Santo, Port Vila">
   <meta name="author" content="Example Shipping Co">
 
-  <!-- Open Graph (Facebook) -->
   <meta property="og:title" content="Example Shipping Co — Connecting Vanuatu's Islands">
   <meta property="og:description" content="Inter-island cargo and passenger shipping in Vanuatu.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://example.vu">
   <meta property="og:image" content="../assets/og-image.png">
 
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Example Shipping Co">
   <meta name="twitter:description" content="Inter-island shipping in Vanuatu.">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
 
-  <title>Inter-island shipping in Vanuatu</title>
+  <title>Home — Example Shipping Co</title>
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
 
   <header class="site-header">
     <div class="header-inner">
-      <a href="index.html" class="logo">
-        <span class="company-name">Example Shipping Co</span>
-      </a>
-      <nav class="main-nav">
+      <a href="index.html" class="logo"><span class="company-name">Example Shipping Co</span></a>
+      <nav class="main-nav" aria-label="Main navigation">
         <a href="index.html" data-i18n="nav.home">Home</a>
         <a href="schedule.html" data-i18n="nav.schedule">Schedule</a>
         <a href="live.html" data-i18n="nav.live">Live Board</a>
@@ -42,15 +37,15 @@
         <a href="about.html" data-i18n="nav.about">About</a>
         <a href="contact.html" data-i18n="nav.contact">Contact</a>
       </nav>
-        <div class="lang-switcher" role="group" aria-label="Language selection">
-            <button data-lang="bi" onclick="i18n.setLang('bi')" aria-label="Switch to Bislama">BI</button>
-            <button data-lang="en" onclick="i18n.setLang('en')" aria-label="Switch to English">EN</button>
-            <button data-lang="fr" onclick="i18n.setLang('fr')" aria-label="Switch to French">FR</button>
-        </div>
+      <div class="lang-switcher" role="group" aria-label="Language selection">
+        <button data-lang="bi" onclick="i18n.setLang('bi')" aria-label="Switch to Bislama">BI</button>
+        <button data-lang="en" onclick="i18n.setLang('en')" aria-label="Switch to English">EN</button>
+        <button data-lang="fr" onclick="i18n.setLang('fr')" aria-label="Switch to French">FR</button>
+      </div>
     </div>
   </header>
 
-  <main>
+  <main role="main">
 
     <section class="hero">
       <h1 class="company-name">Example Shipping Co</h1>
@@ -68,7 +63,7 @@
 
     <section class="card">
       <h2 data-i18n="nav.schedule">Schedule</h2>
-      <table class="schedule-table">
+      <table class="schedule-table" id="public-schedule">
         <thead>
           <tr>
             <th data-i18n="schedule.vessel">Vessel</th>
@@ -78,22 +73,7 @@
             <th data-i18n="schedule.status">Status</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>LC Example 1</td>
-            <td>Port Vila</td>
-            <td>Tanna</td>
-            <td>Mon 08:00</td>
-            <td><span class="status on-time" data-i18n="schedule.on_time">On time</span></td>
-          </tr>
-          <tr>
-            <td>LC Example 1</td>
-            <td>Tanna</td>
-            <td>Erromango</td>
-            <td>Thu 08:00</td>
-            <td><span class="status on-time" data-i18n="schedule.on_time">On time</span></td>
-          </tr>
-        </tbody>
+        <tbody></tbody>
       </table>
     </section>
 
@@ -103,44 +83,30 @@
     <div class="footer-inner">
       <div class="footer-col">
         <h4 class="company-name">Example Shipping Co</h4>
-        <p>Port Vila, Vanuatu</p>
+        <p class="footer-address">Port Vila, Vanuatu</p>
       </div>
       <div class="footer-col">
         <h4 data-i18n="nav.contact">Contact</h4>
-        <p>📞 +678 XXXX XXX</p>
-        <p>✉️ info@example.vu</p>
+        <p class="footer-phone">📞 +678 XXXX XXX</p>
+        <p class="footer-email">✉️ info@example.vu</p>
       </div>
       <div class="footer-col">
         <h4 data-i18n="footer.language">Language</h4>
         <div class="lang-switcher" role="group" aria-label="Language selection">
-            <button data-lang="bi" onclick="i18n.setLang('bi')" aria-label="Switch to Bislama">BI</button>
-            <button data-lang="en" onclick="i18n.setLang('en')" aria-label="Switch to English">EN</button>
-            <button data-lang="fr" onclick="i18n.setLang('fr')" aria-label="Switch to French">FR</button>
+          <button data-lang="bi" onclick="i18n.setLang('bi')" aria-label="Switch to Bislama">BI</button>
+          <button data-lang="en" onclick="i18n.setLang('en')" aria-label="Switch to English">EN</button>
+          <button data-lang="fr" onclick="i18n.setLang('fr')" aria-label="Switch to French">FR</button>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 Example Shipping Co. <span data-i18n="footer.rights">All rights reserved</span>.</p>
+      <p><span class="footer-copyright">© 2026 Example Shipping Co</span>. <span data-i18n="footer.rights">All rights reserved</span>.</p>
     </div>
   </footer>
 
   <script src="../i18n.js"></script>
-  <script src="../assets/js/app.js"></script> 
-  <script>
-    (async () => {
-      await i18n.initI18n();
-      document.querySelectorAll('.lang-switcher button').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === i18n.getLang());
-      });
-      const originalSetLang = i18n.setLang;
-      i18n.setLang = function(lang) {
-        originalSetLang(lang);
-        document.querySelectorAll('.lang-switcher button').forEach(btn => {
-          btn.classList.toggle('active', btn.dataset.lang === lang);
-        });
-      };
-    })();
-  </script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/public-data.js"></script>
 
 </body>
 </html>

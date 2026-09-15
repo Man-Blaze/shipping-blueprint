@@ -1,29 +1,25 @@
 <!DOCTYPE html>
 <html lang="bi">
 <head>
-<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Example Shipping Co — inter-island cargo and passenger shipping in Vanuatu. Routes to Tanna, Erromango, Epi, Santo.">
-  <meta name="keywords" content="Vanuatu shipping, inter-island, cargo, passenger, Tanna, Santo, Port Vila">
+  <meta name="description" content="Contact Example Shipping Co — inter-island cargo and passenger shipping in Vanuatu.">
+  <meta name="keywords" content="Vanuatu shipping, contact, inter-island, cargo, passenger">
   <meta name="author" content="Example Shipping Co">
 
-  <!-- Open Graph (Facebook) -->
-  <meta property="og:title" content="Example Shipping Co — Connecting Vanuatu's Islands">
-  <meta property="og:description" content="Inter-island cargo and passenger shipping in Vanuatu.">
+  <meta property="og:title" content="Contact — Example Shipping Co">
+  <meta property="og:description" content="Reach us for bookings and enquiries.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://example.vu">
   <meta property="og:image" content="../assets/og-image.png">
 
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Example Shipping Co">
-  <meta name="twitter:description" content="Inter-island shipping in Vanuatu.">
+  <meta name="twitter:title" content="Contact — Example Shipping Co">
+  <meta name="twitter:description" content="Reach us for bookings and enquiries.">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
 
-  <title>Reach us</title>
+  <title>Contact — Example Shipping Co</title>
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
@@ -31,7 +27,7 @@
   <header class="site-header">
     <div class="header-inner">
       <a href="index.html" class="logo"><span class="company-name">Example Shipping Co</span></a>
-      <nav class="main-nav">
+      <nav class="main-nav" aria-label="Main navigation">
         <a href="index.html" data-i18n="nav.home">Home</a>
         <a href="schedule.html" data-i18n="nav.schedule">Schedule</a>
         <a href="live.html" data-i18n="nav.live">Live Board</a>
@@ -41,37 +37,37 @@
         <a href="about.html" data-i18n="nav.about">About</a>
         <a href="contact.html" data-i18n="nav.contact">Contact</a>
       </nav>
-        <div class="lang-switcher" role="group" aria-label="Language selection">
-            <button data-lang="bi" onclick="i18n.setLang('bi')" aria-label="Switch to Bislama">BI</button>
-            <button data-lang="en" onclick="i18n.setLang('en')" aria-label="Switch to English">EN</button>
-            <button data-lang="fr" onclick="i18n.setLang('fr')" aria-label="Switch to French">FR</button>
-        </div>
+      <div class="lang-switcher" role="group" aria-label="Language selection">
+        <button data-lang="bi" onclick="i18n.setLang('bi')" aria-label="Switch to Bislama">BI</button>
+        <button data-lang="en" onclick="i18n.setLang('en')" aria-label="Switch to English">EN</button>
+        <button data-lang="fr" onclick="i18n.setLang('fr')" aria-label="Switch to French">FR</button>
+      </div>
     </div>
   </header>
 
-  <main>
+  <main role="main">
     <section class="card">
       <h1 data-i18n="nav.contact">Contact</h1>
 
       <div class="routes-grid" style="margin-top:20px;">
         <div class="route-card">
           <h3>📍 Office</h3>
-          <p>Stade, Port Vila, Vanuatu</p>
+          <p class="contact-address">Stade, Port Vila, Vanuatu</p>
         </div>
 
         <div class="route-card">
           <h3>📞 Phone</h3>
-          <p>+678 XXXX XXX</p>
+          <p class="contact-phone">+678 XXXX XXX</p>
         </div>
 
         <div class="route-card">
           <h3>✉️ Email</h3>
-          <p>info@example.vu</p>
+          <p class="contact-email">info@example.vu</p>
         </div>
 
         <div class="route-card">
           <h3>📘 Facebook</h3>
-          <p>facebook.com/example</p>
+          <p class="contact-facebook">facebook.com/example</p>
         </div>
       </div>
     </section>
@@ -91,43 +87,30 @@
     <div class="footer-inner">
       <div class="footer-col">
         <h4 class="company-name">Example Shipping Co</h4>
-        <p>Port Vila, Vanuatu</p>
+        <p class="footer-address">Port Vila, Vanuatu</p>
       </div>
       <div class="footer-col">
         <h4 data-i18n="nav.contact">Contact</h4>
-        <p>📞 +678 XXXX XXX</p>
-        <p>✉️ info@example.vu</p>
+        <p class="footer-phone">📞 +678 XXXX XXX</p>
+        <p class="footer-email">✉️ info@example.vu</p>
       </div>
       <div class="footer-col">
         <h4 data-i18n="footer.language">Language</h4>
         <div class="lang-switcher" role="group" aria-label="Language selection">
-            <button data-lang="bi" onclick="i18n.setLang('bi')" aria-label="Switch to Bislama">BI</button>
-            <button data-lang="en" onclick="i18n.setLang('en')" aria-label="Switch to English">EN</button>
-            <button data-lang="fr" onclick="i18n.setLang('fr')" aria-label="Switch to French">FR</button>
+          <button data-lang="bi" onclick="i18n.setLang('bi')" aria-label="Switch to Bislama">BI</button>
+          <button data-lang="en" onclick="i18n.setLang('en')" aria-label="Switch to English">EN</button>
+          <button data-lang="fr" onclick="i18n.setLang('fr')" aria-label="Switch to French">FR</button>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 Example Shipping Co. <span data-i18n="footer.rights">All rights reserved</span>.</p>
+      <p><span class="footer-copyright">© 2026 Example Shipping Co</span>. <span data-i18n="footer.rights">All rights reserved</span>.</p>
     </div>
   </footer>
 
   <script src="../i18n.js"></script>
-  <script>
-    (async () => {
-      await i18n.initI18n();
-      document.querySelectorAll('.lang-switcher button').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === i18n.getLang());
-      });
-      const originalSetLang = i18n.setLang;
-      i18n.setLang = function(lang) {
-        originalSetLang(lang);
-        document.querySelectorAll('.lang-switcher button').forEach(btn => {
-          btn.classList.toggle('active', btn.dataset.lang === lang);
-        });
-      };
-    })();
-  </script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/public-data.js"></script>
 
 </body>
 </html>
