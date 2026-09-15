@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="bi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test — i18n</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f5f5f5; }
+    .box { background: white; padding: 20px; margin: 20px 0; border-radius: 8px; }
+    .lang-switcher button { padding: 8px 16px; margin-right: 8px; cursor: pointer; }
+    .lang-switcher button.active { background: #003366; color: white; }
+    h1 { color: #003366; }
+  </style>
+</head>
+<body>
+
+  <h1>🧪 i18n Test Page</h1>
+
+  <div class="box">
+    <h2>Language Switcher</h2>
+    <div class="lang-switcher">
+      <button data-lang="bi" onclick="i18n.setLang('bi')">BI</button>
+      <button data-lang="en" onclick="i18n.setLang('en')">EN</button>
+      <button data-lang="fr" onclick="i18n.setLang('fr')">FR</button>
+    </div>
+  </div>
+
+  <div class="box">
+    <h2>Test Translations</h2>
+    <p data-i18n="nav.home">Home</p>
+    <p data-i18n="nav.schedule">Schedule</p>
+    <p data-i18n="home.tagline">Tagline</p>
+    <p data-i18n="home.live_status">Live status</p>
+    <p data-i18n="schedule.title">Schedule title</p>
+    <p data-i18n="jobs.title">Jobs title</p>
+    <p data-i18n="footer.rights">Rights</p>
+  </div>
+
+  <div class="box">
+    <h2>Current Language</h2>
+    <p id="current-lang">—</p>
+  </div>
+
+  <script src="../i18n.js"></script>
+<script>
+  (async () => {
+    await i18n.initI18n();
+    updateCurrentLang();
+  })();
+
+  function updateCurrentLang() {
+    document.getElementById('current-lang').textContent = i18n.getLang();
+    // Highlight active button
+    document.querySelectorAll('.lang-switcher button').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === i18n.getLang());
+    });
+  }
+
+  // Patch setLang to also update display
+  const originalSetLang = i18n.setLang;
+  i18n.setLang = function(lang) {
+    originalSetLang(lang);
+    updateCurrentLang();
+  };
+</script>
+
+</body>
+</html>
