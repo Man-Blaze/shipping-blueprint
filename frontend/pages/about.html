@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="bi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Example Shipping Co</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo"><span class="company-name">Example Shipping Co</span></a>
+      <nav class="main-nav">
+        <a href="index.html" data-i18n="nav.home">Home</a>
+        <a href="schedule.html" data-i18n="nav.schedule">Schedule</a>
+        <a href="live.html" data-i18n="nav.live">Live Board</a>
+        <a href="routes.html" data-i18n="nav.routes">Routes</a>
+        <a href="news.html" data-i18n="nav.news">News</a>
+        <a href="jobs.html" data-i18n="nav.jobs">Jobs</a>
+        <a href="about.html" data-i18n="nav.about">About</a>
+        <a href="contact.html" data-i18n="nav.contact">Contact</a>
+      </nav>
+      <div class="lang-switcher">
+        <button data-lang="bi" onclick="i18n.setLang('bi')">BI</button>
+        <button data-lang="en" onclick="i18n.setLang('en')">EN</button>
+        <button data-lang="fr" onclick="i18n.setLang('fr')">FR</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <h1 data-i18n="nav.about">About Us</h1>
+      <p style="margin-top:16px;">
+        Example Shipping Co has served Vanuatu's islands for over 20 years. We operate
+        landing craft (LC) vessels providing transport for passengers, cargo, and outer-island
+        relief supplies.
+      </p>
+      <p style="margin-top:12px;">
+        We are committed to safe, reliable, and affordable shipping for every community
+        in Vanuatu — from Port Vila to the most remote islands.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Our Vessels</h2>
+      <div class="routes-grid">
+        <div class="route-card">
+          <h3>LC Example 1</h3>
+          <p><strong>Type:</strong> Landing Craft</p>
+          <p><strong>Capacity:</strong> 120 passengers</p>
+          <p><strong>Routes:</strong> Tanna, Erromango, Epi, Santo</p>
+        </div>
+        <div class="route-card">
+          <h3>LC Example 2</h3>
+          <p><strong>Type:</strong> Landing Craft</p>
+          <p><strong>Capacity:</strong> 90 passengers</p>
+          <p><strong>Routes:</strong> Malekula, Ambae, Pentecost</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Our Values</h2>
+      <ul style="margin-left:20px;">
+        <li><strong>Safety</strong> — every trip, every time</li>
+        <li><strong>Service</strong> — for every island community</li>
+        <li><strong>Reliability</strong> — schedules you can trust</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h4 class="company-name">Example Shipping Co</h4>
+        <p>Port Vila, Vanuatu</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="nav.contact">Contact</h4>
+        <p>📞 +678 XXXX XXX</p>
+        <p>✉️ info@example.vu</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.language">Language</h4>
+        <div class="lang-switcher">
+          <button data-lang="bi" onclick="i18n.setLang('bi')">BI</button>
+          <button data-lang="en" onclick="i18n.setLang('en')">EN</button>
+          <button data-lang="fr" onclick="i18n.setLang('fr')">FR</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Example Shipping Co. <span data-i18n="footer.rights">All rights reserved</span>.</p>
+    </div>
+  </footer>
+
+  <script src="../i18n.js"></script>
+  <script>
+    (async () => {
+      await i18n.initI18n();
+      document.querySelectorAll('.lang-switcher button').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === i18n.getLang());
+      });
+      const originalSetLang = i18n.setLang;
+      i18n.setLang = function(lang) {
+        originalSetLang(lang);
+        document.querySelectorAll('.lang-switcher button').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.lang === lang);
+        });
+      };
+    })();
+  </script>
+
+</body>
+</html>
