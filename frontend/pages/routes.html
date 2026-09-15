@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Example Shipping Co — Home</title>
+  <title>Routes — Example Shipping Co</title>
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
@@ -32,52 +32,57 @@
   </header>
 
   <main>
-
-    <section class="hero">
-      <h1 class="company-name">Example Shipping Co</h1>
-      <p data-i18n="home.tagline">Connecting Vanuatu's Islands</p>
-    </section>
-
     <section class="card">
-      <h2 data-i18n="home.live_status">Where is our ship now?</h2>
-      <p>🔴 <strong>LC Example 1</strong> — Anchored at Port Vila</p>
-      <p style="margin-top: 8px; color: #666;">
-        <span data-i18n="home.next_departure">Next departure</span>:
-        <strong>Monday 08:00 → Tanna</strong>
+      <h1 data-i18n="nav.routes">Routes</h1>
+      <p style="color: #666; margin-bottom: 20px;">
+        Islands served by Example Shipping Co
       </p>
-    </section>
 
-    <section class="card">
-      <h2 data-i18n="nav.schedule">Schedule</h2>
-      <table class="schedule-table">
-        <thead>
-          <tr>
-            <th data-i18n="schedule.vessel">Vessel</th>
-            <th data-i18n="schedule.from">From</th>
-            <th data-i18n="schedule.to">To</th>
-            <th data-i18n="schedule.departure">Departure</th>
-            <th data-i18n="schedule.status">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>LC Example 1</td>
-            <td>Port Vila</td>
-            <td>Tanna</td>
-            <td>Mon 08:00</td>
-            <td><span class="status on-time" data-i18n="schedule.on_time">On time</span></td>
-          </tr>
-          <tr>
-            <td>LC Example 1</td>
-            <td>Tanna</td>
-            <td>Erromango</td>
-            <td>Thu 08:00</td>
-            <td><span class="status on-time" data-i18n="schedule.on_time">On time</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+      <div class="routes-grid">
 
+        <div class="route-card">
+          <h3>Port Vila → Tanna</h3>
+          <p>Vessel: LC Example 1</p>
+          <div class="days">
+            <span class="day">Mon</span>
+            <span class="day">Thu</span>
+          </div>
+        </div>
+
+        <div class="route-card">
+          <h3>Tanna → Erromango</h3>
+          <p>Vessel: LC Example 1</p>
+          <div class="days">
+            <span class="day">Thu</span>
+          </div>
+        </div>
+
+        <div class="route-card">
+          <h3>Erromango → Epi</h3>
+          <p>Vessel: LC Example 1</p>
+          <div class="days">
+            <span class="day">Fri</span>
+          </div>
+        </div>
+
+        <div class="route-card">
+          <h3>Epi → Santo</h3>
+          <p>Vessel: LC Example 1</p>
+          <div class="days">
+            <span class="day">Sat</span>
+          </div>
+        </div>
+
+        <div class="route-card">
+          <h3>Santo → Port Vila</h3>
+          <p>Vessel: LC Example 1</p>
+          <div class="days">
+            <span class="day">Sun</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">

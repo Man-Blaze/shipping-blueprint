@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Example Shipping Co — Home</title>
+  <title>Schedule — Example Shipping Co</title>
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
@@ -32,23 +32,12 @@
   </header>
 
   <main>
-
-    <section class="hero">
-      <h1 class="company-name">Example Shipping Co</h1>
-      <p data-i18n="home.tagline">Connecting Vanuatu's Islands</p>
-    </section>
-
     <section class="card">
-      <h2 data-i18n="home.live_status">Where is our ship now?</h2>
-      <p>🔴 <strong>LC Example 1</strong> — Anchored at Port Vila</p>
-      <p style="margin-top: 8px; color: #666;">
-        <span data-i18n="home.next_departure">Next departure</span>:
-        <strong>Monday 08:00 → Tanna</strong>
+      <h1 data-i18n="schedule.title">Live Schedule</h1>
+      <p style="color: #666; margin-bottom: 20px;">
+        Updated: <strong>16 Sep 2026, 04:00</strong>
       </p>
-    </section>
 
-    <section class="card">
-      <h2 data-i18n="nav.schedule">Schedule</h2>
       <table class="schedule-table">
         <thead>
           <tr>
@@ -74,10 +63,30 @@
             <td>Thu 08:00</td>
             <td><span class="status on-time" data-i18n="schedule.on_time">On time</span></td>
           </tr>
+          <tr>
+            <td>LC Example 1</td>
+            <td>Erromango</td>
+            <td>Epi</td>
+            <td>Fri 06:00</td>
+            <td><span class="status delayed" data-i18n="schedule.delayed">Delayed</span></td>
+          </tr>
+          <tr>
+            <td>LC Example 1</td>
+            <td>Epi</td>
+            <td>Santo</td>
+            <td>Sat 07:00</td>
+            <td><span class="status on-time" data-i18n="schedule.on_time">On time</span></td>
+          </tr>
+          <tr>
+            <td>LC Example 1</td>
+            <td>Santo</td>
+            <td>Port Vila</td>
+            <td>Sun 10:00</td>
+            <td><span class="status cancelled" data-i18n="schedule.cancelled">Cancelled</span></td>
+          </tr>
         </tbody>
       </table>
     </section>
-
   </main>
 
   <footer class="site-footer">
