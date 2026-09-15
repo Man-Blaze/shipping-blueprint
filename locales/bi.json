@@ -1,0 +1,40 @@
+{
+  "nav": {
+    "home": "Hom",
+    "schedule": "Skedul",
+    "live": "Laef Boed",
+    "routes": "Rut",
+    "news": "Nius",
+    "jobs": "Wok",
+    "about": "Abaot",
+    "contact": "Kontakt"
+  },
+  "home": {
+    "tagline": "Konektem ol Aelan blong Vanuatu",
+    "live_status": "Ship blong yumi i stap we nao?",
+    "next_departure": "Nekis aot",
+    "book_now": "Bukum nao"
+  },
+  "schedule": {
+    "title": "Laef Skedul",
+    "vessel": "Sip",
+    "from": "From",
+    "to": "Go long",
+    "departure": "Aot",
+    "status": "Statas",
+    "on_time": "On taem",
+    "delayed": "I leit",
+    "cancelled": "I kansel"
+  },
+  "jobs": {
+    "title": "Wok blong Krew",
+    "position": "Posison",
+    "requirements": "Requirement",
+    "apply": "Aplae nao",
+    "contact": "Kontakt"
+  },
+  "footer": {
+    "rights": "Ol raet i stap",
+    "language": "Lanwis"
+  }
+}

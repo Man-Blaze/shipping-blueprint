@@ -1,0 +1,40 @@
+{
+  "nav": {
+    "home": "Home",
+    "schedule": "Schedule",
+    "live": "Live Board",
+    "routes": "Routes",
+    "news": "News",
+    "jobs": "Jobs",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "home": {
+    "tagline": "Connecting Vanuatu's Islands",
+    "live_status": "Where is our ship now?",
+    "next_departure": "Next departure",
+    "book_now": "Book now"
+  },
+  "schedule": {
+    "title": "Live Schedule",
+    "vessel": "Vessel",
+    "from": "From",
+    "to": "To",
+    "departure": "Departure",
+    "status": "Status",
+    "on_time": "On time",
+    "delayed": "Delayed",
+    "cancelled": "Cancelled"
+  },
+  "jobs": {
+    "title": "Crew Opportunities",
+    "position": "Position",
+    "requirements": "Requirements",
+    "apply": "Apply now",
+    "contact": "Contact"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "language": "Language"
+  }
+}

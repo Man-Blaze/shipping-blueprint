@@ -1,0 +1,40 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "schedule": "Horaire",
+    "live": "Tableau en direct",
+    "routes": "Itinéraires",
+    "news": "Actualités",
+    "jobs": "Emplois",
+    "about": "À propos",
+    "contact": "Contact"
+  },
+  "home": {
+    "tagline": "Connecter les îles du Vanuatu",
+    "live_status": "Où est notre navire maintenant ?",
+    "next_departure": "Prochain départ",
+    "book_now": "Réserver"
+  },
+  "schedule": {
+    "title": "Horaire en direct",
+    "vessel": "Navire",
+    "from": "De",
+    "to": "À",
+    "departure": "Départ",
+    "status": "Statut",
+    "on_time": "À l'heure",
+    "delayed": "Retardé",
+    "cancelled": "Annulé"
+  },
+  "jobs": {
+    "title": "Opportunités d'équipage",
+    "position": "Poste",
+    "requirements": "Exigences",
+    "apply": "Postuler",
+    "contact": "Contact"
+  },
+  "footer": {
+    "rights": "Tous droits réservés",
+    "language": "Langue"
+  }
+}

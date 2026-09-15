@@ -1,0 +1,40 @@
+{
+  "company": {
+    "name": "Example Shipping Co",
+    "tagline": {
+      "bi": "Konektem ol Aelan blong Vanuatu",
+      "en": "Connecting Vanuatu's Islands",
+      "fr": "Connecter les îles du Vanuatu"
+    },
+    "logo": "logo.png",
+    "colors": {
+      "primary": "#003366",
+      "secondary": "#FFB800",
+      "accent": "#00A86B"
+    },
+    "phone": "+678 XXXX XXX",
+    "email": "info@example.vu",
+    "facebook": "facebook.com/example",
+    "address": "Port Vila, Vanuatu"
+  },
+  "languages": {
+    "default": "bi",
+    "available": ["bi", "en", "fr"],
+    "switcher": true
+  },
+  "vessels": [
+    { "name": "LC Example 1", "type": "LC", "capacity": 120 }
+  ],
+  "routes": [
+    { "from": "Port Vila", "to": "Tanna", "vessel": "LC Example 1", "days": ["Mon", "Thu"] }
+  ],
+  "features": {
+    "liveBoard": true,
+    "news": true,
+    "jobs": true,
+    "booking": false,
+    "sponsors": true,
+    "sms": false,
+    "languageSwitcher": true
+  }
+}
