@@ -1,0 +1,43 @@
+[build]
+  base = "frontend"
+  publish = "."
+
+[[redirects]]
+  from = "/"
+  to = "/pages/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/schedule"
+  to = "/pages/schedule.html"
+  status = 200
+
+[[redirects]]
+  from = "/live"
+  to = "/pages/live.html"
+  status = 200
+
+[[redirects]]
+  from = "/routes"
+  to = "/pages/routes.html"
+  status = 200
+
+[[redirects]]
+  from = "/news"
+  to = "/pages/news.html"
+  status = 200
+
+[[redirects]]
+  from = "/jobs"
+  to = "/pages/jobs.html"
+  status = 200
+
+[[redirects]]
+  from = "/about"
+  to = "/pages/about.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/pages/contact.html"
+  status = 200
