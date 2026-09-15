@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="bi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schedule Editor — Admin</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body data-require-auth="true">
+
+  <header class="admin-header">
+    <h1>⚙️ Admin</h1>
+    <nav class="admin-nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="schedule-editor.html" class="active">Schedule</a>
+      <a href="live-editor.html">Live Board</a>
+      <a href="news-editor.html">News</a>
+      <a href="jobs-editor.html">Jobs</a>
+      <a href="settings.html">Settings</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </nav>
+  </header>
+
+  <main class="admin-main">
+
+    <div class="admin-card">
+      <h2>➕ Add New Trip</h2>
+      <form id="trip-form" onsubmit="addTrip(event)">
+        <div class="form-group">
+          <label>Vessel</label>
+          <input type="text" id="vessel" required placeholder="LC Example 1">
+        </div>
+
+        <div class="form-group">
+          <label>From</label>
+          <input type="text" id="from" required placeholder="Port Vila">
+        </div>
+
+        <div class="form-group">
+          <label>To</label>
+          <input type="text" id="to" required placeholder="Tanna">
+        </div>
+
+        <div class="form-group">
+          <label>Departure</label>
+          <input type="text" id="departure" required placeholder="Mon 08:00">
+        </div>
+
+        <div class="form-group">
+          <label>Status</label>
+          <select id="status">
+            <option value="on-time">On time</option>
+            <option value="delayed">Delayed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Trip</button>
+      </form>
+    </div>
+
+    <div class="admin-card">
+      <h2>📅 Current Schedule</h2>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Vessel</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Departure</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="schedule-body">
+          <!-- Filled by JS -->
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <script src="admin.js"></script>
+  <script>
+    function loadSchedule() {
+      const trips = getData('schedule', [
+        { vessel: 'LC Example 1', from: 'Port Vila', to: 'Tanna', departure: 'Mon 08:00', status: 'on-time' },
+        { vessel: 'LC Example 1', from: 'Tanna', to: 'Erromango', departure: 'Thu 08:00', status: 'on-time' }
+      ]);
+      renderSchedule(trips);
+    }
+
+    function renderSchedule(trips) {
+      const body = document.getElementById('schedule-body');
+      body.innerHTML = '';
+      trips.forEach((trip, i) => {
+        const statusLabel = { 'on-time': 'On time', 'delayed': 'Delayed', 'cancelled': 'Cancelled' }[trip.status];
+        body.innerHTML += `
+          <tr>
+            <td>${trip.vessel}</td>
+            <td>${trip.from}</td>
+            <td>${trip.to}</td>
+            <td>${trip.departure}</td>
+            <td><span class="status ${trip.status}">${statusLabel}</span></td>
+            <td><button class="btn btn-danger" onclick="deleteTrip(${i})">Delete</button></td>
+          </tr>
+        `;
+      });
+    }
+
+    function addTrip(e) {
+      e.preventDefault();
+      const trips = getData('schedule', []);
+      trips.push({
+        vessel: document.getElementById('vessel').value,
+        from: document.getElementById('from').value,
+        to: document.getElementById('to').value,
+        departure: document.getElementById('departure').value,
+        status: document.getElementById('status').value
+      });
+      saveData('schedule', trips);
+      document.getElementById('trip-form').reset();
+      renderSchedule(trips);
+    }
+
+    function deleteTrip(index) {
+      if (!confirm('Delete this trip?')) return;
+      const trips = getData('schedule', []);
+      trips.splice(index, 1);
+      saveData('schedule', trips);
+      renderSchedule(trips);
+    }
+
+    loadSchedule();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="bi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jobs Editor — Admin</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body data-require-auth="true">
+
+  <header class="admin-header">
+    <h1>⚙️ Admin</h1>
+    <nav class="admin-nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="schedule-editor.html">Schedule</a>
+      <a href="live-editor.html">Live Board</a>
+      <a href="news-editor.html">News</a>
+      <a href="jobs-editor.html" class="active">Jobs</a>
+      <a href="settings.html">Settings</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </nav>
+  </header>
+
+  <main class="admin-main">
+
+    <div class="admin-card">
+      <h2>💼 Post a Job (3 Languages)</h2>
+
+      <form id="job-form" onsubmit="addJob(event)">
+
+        <div>
+          <div class="lang-tabs">
+            <button type="button" data-lang="bi" class="active">🇻🇺 Bislama</button>
+            <button type="button" data-lang="en">🇬🇧 English</button>
+            <button type="button" data-lang="fr">🇫🇷 Français</button>
+          </div>
+
+          <div class="lang-pane active" data-lang="bi">
+            <div class="form-group">
+              <label>Position (Bislama)</label>
+              <input type="text" id="job-title-bi" placeholder="Deckhand">
+            </div>
+            <div class="form-group">
+              <label>Requirements (Bislama) — one per line</label>
+              <textarea id="job-req-bi" rows="4"></textarea>
+            </div>
+          </div>
+
+          <div class="lang-pane" data-lang="en">
+            <div class="form-group">
+              <label>Position (English)</label>
+              <input type="text" id="job-title-en" placeholder="Deckhand">
+            </div>
+            <div class="form-group">
+              <label>Requirements (English) — one per line</label>
+              <textarea id="job-req-en" rows="4"></textarea>
+            </div>
+          </div>
+
+          <div class="lang-pane" data-lang="fr">
+            <div class="form-group">
+              <label>Poste (Français)</label>
+              <input type="text" id="job-title-fr" placeholder="Matelot">
+            </div>
+            <div class="form-group">
+              <label>Exigences (Français) — une par ligne</label>
+              <textarea id="job-req-fr" rows="4"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top:16px;">
+          <label>Location</label>
+          <input type="text" id="job-location" placeholder="Port Vila">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Publish Job</button>
+      </form>
+    </div>
+
+    <div class="admin-card">
+      <h2>📋 Published Jobs</h2>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Position (BI)</th>
+            <th>Position (EN)</th>
+            <th>Position (FR)</th>
+            <th>Location</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="jobs-body"></tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <script src="admin.js"></script>
+  <script>
+    function loadJobs() {
+      const jobs = getData('jobs', []);
+      renderJobs(jobs);
+    }
+
+    function renderJobs(jobs) {
+      const body = document.getElementById('jobs-body');
+      body.innerHTML = '';
+      jobs.forEach((j, i) => {
+        body.innerHTML += `
+          <tr>
+            <td>${j.title.bi || '—'}</td>
+            <td>${j.title.en || '—'}</td>
+            <td>${j.title.fr || '—'}</td>
+            <td>${j.location || '—'}</td>
+            <td><button class="btn btn-danger" onclick="deleteJob(${i})">Delete</button></td>
+          </tr>
+        `;
+      });
+    }
+
+    function addJob(e) {
+      e.preventDefault();
+      const jobs = getData('jobs', []);
+      jobs.push({
+        title: {
+          bi: document.getElementById('job-title-bi').value,
+          en: document.getElementById('job-title-en').value,
+          fr: document.getElementById('job-title-fr').value
+        },
+        req: {
+          bi: document.getElementById('job-req-bi').value,
+          en: document.getElementById('job-req-en').value,
+          fr: document.getElementById('job-req-fr').value
+        },
+        location: document.getElementById('job-location').value
+      });
+      saveData('jobs', jobs);
+      document.getElementById('job-form').reset();
+      renderJobs(jobs);
+    }
+
+    function deleteJob(index) {
+      if (!confirm('Delete this job?')) return;
+      const jobs = getData('jobs', []);
+      jobs.splice(index, 1);
+      saveData('jobs', jobs);
+      renderJobs(jobs);
+    }
+
+    loadJobs();
+  </script>
+
+</body>
+</html>

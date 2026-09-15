@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="bi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Board Editor — Admin</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body data-require-auth="true">
+
+  <header class="admin-header">
+    <h1>⚙️ Admin</h1>
+    <nav class="admin-nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="schedule-editor.html">Schedule</a>
+      <a href="live-editor.html" class="active">Live Board</a>
+      <a href="news-editor.html">News</a>
+      <a href="jobs-editor.html">Jobs</a>
+      <a href="settings.html">Settings</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </nav>
+  </header>
+
+  <main class="admin-main">
+
+    <div class="admin-card">
+      <h2>🚢 Update Vessel Status</h2>
+      <p style="color:#666; margin-bottom:16px; font-size:14px;">
+        Enter your current vessel positions. The public Live Board updates when you save.
+      </p>
+
+      <form id="live-form" onsubmit="addVessel(event)">
+        <div class="form-group">
+          <label>Vessel Name</label>
+          <input type="text" id="vessel-name" required placeholder="LC Example 1">
+        </div>
+
+        <div class="form-group">
+          <label>Status</label>
+          <select id="vessel-status">
+            <option value="⚓ Anchored">⚓ Anchored</option>
+            <option value="🛳️ En route">🛳️ En route</option>
+            <option value="📦 Loading">📦 Loading</option>
+            <option value="⏸️ Delayed">⏸️ Delayed</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Current Location</label>
+          <input type="text" id="vessel-location" required placeholder="Port Vila">
+        </div>
+
+        <div class="form-group">
+          <label>Next Destination / ETA</label>
+          <input type="text" id="vessel-next" required placeholder="Tanna — Mon 08:00">
+        </div>
+
+        <div class="form-group">
+          <label>Dinghy Status</label>
+          <select id="vessel-dinghy">
+            <option value="✅ Running">✅ Running</option>
+            <option value="⏸️ On standby">⏸️ On standby</option>
+            <option value="❌ Not running">❌ Not running</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add / Update Vessel</button>
+      </form>
+    </div>
+
+    <div class="admin-card">
+      <h2>📋 Current Live Board</h2>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Vessel</th>
+            <th>Status</th>
+            <th>Location</th>
+            <th>Next</th>
+            <th>Dinghy</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="live-body"></tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <script src="admin.js"></script>
+  <script>
+    function loadLive() {
+      const vessels = getData('live', [
+        { name: 'LC Example 1', status: '⚓ Anchored', location: 'Port Vila', next: 'Tanna — Mon 08:00', dinghy: '✅ Running' }
+      ]);
+      renderLive(vessels);
+    }
+
+    function renderLive(vessels) {
+      const body = document.getElementById('live-body');
+      body.innerHTML = '';
+      vessels.forEach((v, i) => {
+        body.innerHTML += `
+          <tr>
+            <td>${v.name}</td>
+            <td>${v.status}</td>
+            <td>${v.location}</td>
+            <td>${v.next}</td>
+            <td>${v.dinghy}</td>
+            <td><button class="btn btn-danger" onclick="deleteVessel(${i})">Delete</button></td>
+          </tr>
+        `;
+      });
+    }
+
+    function addVessel(e) {
+      e.preventDefault();
+      const vessels = getData('live', []);
+      const name = document.getElementById('vessel-name').value;
+
+      const existing = vessels.findIndex(v => v.name === name);
+      const newVessel = {
+        name,
+        status: document.getElementById('vessel-status').value,
+        location: document.getElementById('vessel-location').value,
+        next: document.getElementById('vessel-next').value,
+        dinghy: document.getElementById('vessel-dinghy').value
+      };
+
+      if (existing >= 0) {
+        vessels[existing] = newVessel;
+      } else {
+        vessels.push(newVessel);
+      }
+
+      saveData('live', vessels);
+      document.getElementById('live-form').reset();
+      renderLive(vessels);
+    }
+
+    function deleteVessel(index) {
+      if (!confirm('Delete this vessel?')) return;
+      const vessels = getData('live', []);
+      vessels.splice(index, 1);
+      saveData('live', vessels);
+      renderLive(vessels);
+    }
+
+    loadLive();
+  </script>
+
+</body>
+</html>

@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Inter-island shipping in Vanuatu.">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
 
   <title>Latest announcements</title>
   <link rel="stylesheet" href="../assets/css/style.css">
@@ -40,11 +40,11 @@
         <a href="about.html" data-i18n="nav.about">About</a>
         <a href="contact.html" data-i18n="nav.contact">Contact</a>
       </nav>
-      <div class="lang-switcher">
-        <button data-lang="bi" onclick="i18n.setLang('bi')">BI</button>
-        <button data-lang="en" onclick="i18n.setLang('en')">EN</button>
-        <button data-lang="fr" onclick="i18n.setLang('fr')">FR</button>
-      </div>
+        <div class="lang-switcher" role="group" aria-label="Language selection">
+            <button data-lang="bi" onclick="i18n.setLang('bi')" aria-label="Switch to Bislama">BI</button>
+            <button data-lang="en" onclick="i18n.setLang('en')" aria-label="Switch to English">EN</button>
+            <button data-lang="fr" onclick="i18n.setLang('fr')" aria-label="Switch to French">FR</button>
+        </div>
     </div>
   </header>
 
@@ -86,10 +86,10 @@
       </div>
       <div class="footer-col">
         <h4 data-i18n="footer.language">Language</h4>
-        <div class="lang-switcher">
-          <button data-lang="bi" onclick="i18n.setLang('bi')">BI</button>
-          <button data-lang="en" onclick="i18n.setLang('en')">EN</button>
-          <button data-lang="fr" onclick="i18n.setLang('fr')">FR</button>
+        <div class="lang-switcher" role="group" aria-label="Language selection">
+            <button data-lang="bi" onclick="i18n.setLang('bi')" aria-label="Switch to Bislama">BI</button>
+            <button data-lang="en" onclick="i18n.setLang('en')" aria-label="Switch to English">EN</button>
+            <button data-lang="fr" onclick="i18n.setLang('fr')" aria-label="Switch to French">FR</button>
         </div>
       </div>
     </div>

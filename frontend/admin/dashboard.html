@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="bi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Admin</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body data-require-auth="true">
+
+  <header class="admin-header">
+    <h1>⚙️ Admin Dashboard</h1>
+    <nav class="admin-nav">
+      <a href="dashboard.html" class="active">Dashboard</a>
+      <a href="schedule-editor.html">Schedule</a>
+      <a href="live-editor.html">Live Board</a>
+      <a href="news-editor.html">News</a>
+      <a href="jobs-editor.html">Jobs</a>
+      <a href="settings.html">Settings</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </nav>
+  </header>
+
+  <main class="admin-main">
+    <div class="admin-card">
+      <h2>Welcome back 👋</h2>
+      <p>Use the menu above to update your website content.</p>
+    </div>
+
+    <div class="admin-card">
+      <h2>Quick Actions</h2>
+      <div class="admin-actions">
+        <a href="schedule-editor.html" class="btn btn-primary">📅 Edit Schedule</a>
+        <a href="live-editor.html" class="btn btn-primary">🚢 Update Live Board</a>
+        <a href="news-editor.html" class="btn btn-primary">📰 Post News</a>
+        <a href="jobs-editor.html" class="btn btn-primary">💼 Post Job</a>
+      </div>
+    </div>
+
+    <div class="admin-card">
+      <h2>How to use this panel</h2>
+      <ol style="margin-left:20px; line-height:2;">
+        <li>Click a section above (Schedule, Live Board, News, Jobs)</li>
+        <li>Add or edit entries in <strong>Bislama, English, French</strong></li>
+        <li>Click <strong>Save</strong></li>
+        <li>The public website updates automatically</li>
+      </ol>
+    </div>
+  </main>
+
+  <script src="admin.js"></script>
+
+</body>
+</html>
