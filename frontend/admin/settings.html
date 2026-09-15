@@ -64,15 +64,11 @@
   </main>
 
   <script src="admin.js"></script>
+  <script src="../assets/js/supabase.js"></script>
   <script>
-    function loadSettings() {
-      const s = getData('settings', {
-        name: 'Example Shipping Co',
-        address: 'Port Vila, Vanuatu',
-        phone: '+678 XXXX XXX',
-        email: 'info@example.vu',
-        facebook: 'facebook.com/example'
-      });
+    async function loadSettings() {
+      const rows = await sb.get('settings');
+      const s = rows[0] || {};
       document.getElementById('set-name').value = s.name || '';
       document.getElementById('set-address').value = s.address || '';
       document.getElementById('set-phone').value = s.phone || '';
@@ -80,9 +76,9 @@
       document.getElementById('set-facebook').value = s.facebook || '';
     }
 
-    function saveSettings(e) {
+    async function saveSettings(e) {
       e.preventDefault();
-      saveData('settings', {
+      await sb.update('settings', 1, {
         name: document.getElementById('set-name').value,
         address: document.getElementById('set-address').value,
         phone: document.getElementById('set-phone').value,

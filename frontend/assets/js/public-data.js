@@ -1,14 +1,11 @@
 // frontend/assets/js/public-data.js
-// Reads admin data from localStorage and renders on public pages
+// Reads data from Supabase and renders on public pages
 
-function getAdminData(key, fallback) {
-  const raw = localStorage.getItem('admin_' + key);
-  return raw ? JSON.parse(raw) : fallback;
-}
+// ---- SETTINGS ----
+async function renderCompanyName() {
+  const rows = await sb.get('settings');
+  const s = rows[0] || { name: 'Example Shipping Co' };
 
-// Render company name everywhere
-function renderCompanyName() {
-  const s = getAdminData('settings', { name: 'Example Shipping Co' });
   document.querySelectorAll('.company-name').forEach(el => el.textContent = s.name);
   document.querySelectorAll('.footer-copyright').forEach(el => el.textContent = '© 2026 ' + s.name);
   document.querySelectorAll('.footer-phone').forEach(el => el.textContent = '📞 ' + (s.phone || ''));
@@ -19,15 +16,16 @@ function renderCompanyName() {
   document.querySelectorAll('.contact-email').forEach(el => el.textContent = s.email || '');
   document.querySelectorAll('.contact-facebook').forEach(el => el.textContent = s.facebook || '');
 }
-// Render schedule table
-function renderScheduleTable() {
+
+// ---- SCHEDULE ----
+async function renderScheduleTable() {
   const table = document.getElementById('public-schedule');
   if (!table) return;
 
-  const trips = getAdminData('schedule', []);
   const tbody = table.querySelector('tbody');
   if (!tbody) return;
 
+  const trips = await sb.get('schedule');
   const lang = i18n.getLang();
   const statusLabel = {
     'on-time': { bi: 'On taem', en: 'On time', fr: 'À l\'heure' },
@@ -49,14 +47,13 @@ function renderScheduleTable() {
   });
 }
 
-// Render live board
-function renderLiveBoard() {
+// ---- LIVE BOARD ----
+async function renderLiveBoard() {
   const container = document.getElementById('public-live');
   if (!container) return;
 
-  const vessels = getAdminData('live', []);
+  const vessels = await sb.get('live');
   container.innerHTML = '';
-
   vessels.forEach(v => {
     container.innerHTML += `
       <div class="route-card">
@@ -70,18 +67,18 @@ function renderLiveBoard() {
   });
 }
 
-// Render news
-function renderNews() {
+// ---- NEWS ----
+async function renderNews() {
   const container = document.getElementById('public-news');
   if (!container) return;
 
-  const news = getAdminData('news', []);
+  const news = await sb.get('news');
   const lang = i18n.getLang();
 
   container.innerHTML = '';
   news.forEach(n => {
-    const title = n.title[lang] || n.title.bi || n.title.en || '';
-    const body = n.body[lang] || n.body.bi || n.body.en || '';
+    const title = n[`title_${lang}`] || n.title_bi || n.title_en || '';
+    const body = n[`body_${lang}`] || n.body_bi || n.body_en || '';
     container.innerHTML += `
       <article style="border-bottom: 1px solid #e0e4e8; padding-bottom: 16px; margin-bottom: 16px;">
         <h3 style="color:#003366;">${title}</h3>
@@ -92,18 +89,18 @@ function renderNews() {
   });
 }
 
-// Render jobs
-function renderJobs() {
+// ---- JOBS ----
+async function renderJobs() {
   const container = document.getElementById('public-jobs');
   if (!container) return;
 
-  const jobs = getAdminData('jobs', []);
+  const jobs = await sb.get('jobs');
   const lang = i18n.getLang();
 
   container.innerHTML = '';
   jobs.forEach(j => {
-    const title = j.title[lang] || j.title.bi || j.title.en || '';
-    const reqs = (j.req[lang] || j.req.bi || j.req.en || '').split('\n').filter(Boolean);
+    const title = j[`title_${lang}`] || j.title_bi || j.title_en || '';
+    const reqs = (j[`req_${lang}`] || j.req_bi || j.req_en || '').split('\n').filter(Boolean);
 
     container.innerHTML += `
       <div class="route-card">
@@ -118,23 +115,23 @@ function renderJobs() {
   });
 }
 
-// Wait for i18n then render
-window.addEventListener('load', () => {
-  renderCompanyName();
-  renderScheduleTable();
-  renderLiveBoard();
-  renderNews();
-  renderJobs();
-});
+// ---- RENDER ALL ----
+async function renderAll() {
+  await Promise.all([
+    renderCompanyName(),
+    renderScheduleTable(),
+    renderLiveBoard(),
+    renderNews(),
+    renderJobs()
+  ]);
+}
+
+window.addEventListener('load', renderAll);
 
 if (window.i18n) {
   const originalSetLang = i18n.setLang;
   i18n.setLang = function(lang) {
     originalSetLang(lang);
-    renderCompanyName();
-    renderScheduleTable();
-    renderLiveBoard();
-    renderNews();
-    renderJobs();
+    renderAll();
   };
 }

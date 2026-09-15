@@ -25,9 +25,6 @@
 
     <div class="admin-card">
       <h2>📰 Add News (3 Languages)</h2>
-      <p style="color:#666; margin-bottom:16px; font-size:14px;">
-        Enter news in all 3 languages. If English/French empty, Bislama shows to everyone.
-      </p>
 
       <form id="news-form" onsubmit="addNews(event)">
 
@@ -57,7 +54,7 @@
           <div class="lang-pane" data-lang="en">
             <div class="form-group">
               <label>Title (English)</label>
-              <input type="text" id="news-title-en" placeholder="Example: Strong wind — Santo trip delayed">
+              <input type="text" id="news-title-en">
             </div>
             <div class="form-group">
               <label>Body (English)</label>
@@ -68,7 +65,7 @@
           <div class="lang-pane" data-lang="fr">
             <div class="form-group">
               <label>Title (Français)</label>
-              <input type="text" id="news-title-fr" placeholder="Exemple : Fort vent — voyage retardé">
+              <input type="text" id="news-title-fr">
             </div>
             <div class="form-group">
               <label>Body (Français)</label>
@@ -100,61 +97,48 @@
   </main>
 
   <script src="admin.js"></script>
+  <script src="../assets/js/supabase.js"></script>
   <script>
-    function loadNews() {
-      const news = getData('news', [
-        {
-          date: '2026-09-16',
-          title: { bi: 'Strong wind — Santo trip delayed', en: 'Strong wind — Santo trip delayed', fr: 'Fort vent — voyage retardé' },
-          body: { bi: 'Due to strong winds...', en: 'Due to strong winds...', fr: 'En raison de vents forts...' }
-        }
-      ]);
+    async function loadNews() {
+      const news = await sb.get('news');
       renderNews(news);
     }
 
     function renderNews(news) {
       const body = document.getElementById('news-body');
       body.innerHTML = '';
-      news.forEach((n, i) => {
+      news.forEach(n => {
         body.innerHTML += `
           <tr>
             <td>${n.date}</td>
-            <td>${n.title.bi || '—'}</td>
-            <td>${n.title.en || '—'}</td>
-            <td>${n.title.fr || '—'}</td>
-            <td><button class="btn btn-danger" onclick="deleteNews(${i})">Delete</button></td>
+            <td>${n.title_bi || '—'}</td>
+            <td>${n.title_en || '—'}</td>
+            <td>${n.title_fr || '—'}</td>
+            <td><button class="btn btn-danger" onclick="deleteNews(${n.id})">Delete</button></td>
           </tr>
         `;
       });
     }
 
-    function addNews(e) {
+    async function addNews(e) {
       e.preventDefault();
-      const news = getData('news', []);
-      news.unshift({
+      await sb.insert('news', {
         date: document.getElementById('news-date').value,
-        title: {
-          bi: document.getElementById('news-title-bi').value,
-          en: document.getElementById('news-title-en').value,
-          fr: document.getElementById('news-title-fr').value
-        },
-        body: {
-          bi: document.getElementById('news-body-bi').value,
-          en: document.getElementById('news-body-en').value,
-          fr: document.getElementById('news-body-fr').value
-        }
+        title_bi: document.getElementById('news-title-bi').value,
+        title_en: document.getElementById('news-title-en').value,
+        title_fr: document.getElementById('news-title-fr').value,
+        body_bi: document.getElementById('news-body-bi').value,
+        body_en: document.getElementById('news-body-en').value,
+        body_fr: document.getElementById('news-body-fr').value
       });
-      saveData('news', news);
       document.getElementById('news-form').reset();
-      renderNews(news);
+      loadNews();
     }
 
-    function deleteNews(index) {
+    async function deleteNews(id) {
       if (!confirm('Delete this news item?')) return;
-      const news = getData('news', []);
-      news.splice(index, 1);
-      saveData('news', news);
-      renderNews(news);
+      await sb.delete('news', id);
+      loadNews();
     }
 
     loadNews();

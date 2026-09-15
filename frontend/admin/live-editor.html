@@ -24,11 +24,7 @@
   <main class="admin-main">
 
     <div class="admin-card">
-      <h2>🚢 Update Vessel Status</h2>
-      <p style="color:#666; margin-bottom:16px; font-size:14px;">
-        Enter your current vessel positions. The public Live Board updates when you save.
-      </p>
-
+      <h2>🚢 Add / Update Vessel</h2>
       <form id="live-form" onsubmit="addVessel(event)">
         <div class="form-group">
           <label>Vessel Name</label>
@@ -64,7 +60,7 @@
           </select>
         </div>
 
-        <button type="submit" class="btn btn-primary">Add / Update Vessel</button>
+        <button type="submit" class="btn btn-primary">Save Vessel</button>
       </form>
     </div>
 
@@ -88,18 +84,17 @@
   </main>
 
   <script src="admin.js"></script>
+  <script src="../assets/js/supabase.js"></script>
   <script>
-    function loadLive() {
-      const vessels = getData('live', [
-        { name: 'LC Example 1', status: '⚓ Anchored', location: 'Port Vila', next: 'Tanna — Mon 08:00', dinghy: '✅ Running' }
-      ]);
+    async function loadLive() {
+      const vessels = await sb.get('live');
       renderLive(vessels);
     }
 
     function renderLive(vessels) {
       const body = document.getElementById('live-body');
       body.innerHTML = '';
-      vessels.forEach((v, i) => {
+      vessels.forEach(v => {
         body.innerHTML += `
           <tr>
             <td>${v.name}</td>
@@ -107,43 +102,29 @@
             <td>${v.location}</td>
             <td>${v.next}</td>
             <td>${v.dinghy}</td>
-            <td><button class="btn btn-danger" onclick="deleteVessel(${i})">Delete</button></td>
+            <td><button class="btn btn-danger" onclick="deleteVessel(${v.id})">Delete</button></td>
           </tr>
         `;
       });
     }
 
-    function addVessel(e) {
+    async function addVessel(e) {
       e.preventDefault();
-      const vessels = getData('live', []);
-      const name = document.getElementById('vessel-name').value;
-
-      const existing = vessels.findIndex(v => v.name === name);
-      const newVessel = {
-        name,
+      await sb.insert('live', {
+        name: document.getElementById('vessel-name').value,
         status: document.getElementById('vessel-status').value,
         location: document.getElementById('vessel-location').value,
         next: document.getElementById('vessel-next').value,
         dinghy: document.getElementById('vessel-dinghy').value
-      };
-
-      if (existing >= 0) {
-        vessels[existing] = newVessel;
-      } else {
-        vessels.push(newVessel);
-      }
-
-      saveData('live', vessels);
+      });
       document.getElementById('live-form').reset();
-      renderLive(vessels);
+      loadLive();
     }
 
-    function deleteVessel(index) {
+    async function deleteVessel(id) {
       if (!confirm('Delete this vessel?')) return;
-      const vessels = getData('live', []);
-      vessels.splice(index, 1);
-      saveData('live', vessels);
-      renderLive(vessels);
+      await sb.delete('live', id);
+      loadLive();
     }
 
     loadLive();

@@ -49,7 +49,7 @@
           <div class="lang-pane" data-lang="en">
             <div class="form-group">
               <label>Position (English)</label>
-              <input type="text" id="job-title-en" placeholder="Deckhand">
+              <input type="text" id="job-title-en">
             </div>
             <div class="form-group">
               <label>Requirements (English) — one per line</label>
@@ -60,7 +60,7 @@
           <div class="lang-pane" data-lang="fr">
             <div class="form-group">
               <label>Poste (Français)</label>
-              <input type="text" id="job-title-fr" placeholder="Matelot">
+              <input type="text" id="job-title-fr">
             </div>
             <div class="form-group">
               <label>Exigences (Français) — une par ligne</label>
@@ -97,55 +97,48 @@
   </main>
 
   <script src="admin.js"></script>
+  <script src="../assets/js/supabase.js"></script>
   <script>
-    function loadJobs() {
-      const jobs = getData('jobs', []);
+    async function loadJobs() {
+      const jobs = await sb.get('jobs');
       renderJobs(jobs);
     }
 
     function renderJobs(jobs) {
       const body = document.getElementById('jobs-body');
       body.innerHTML = '';
-      jobs.forEach((j, i) => {
+      jobs.forEach(j => {
         body.innerHTML += `
           <tr>
-            <td>${j.title.bi || '—'}</td>
-            <td>${j.title.en || '—'}</td>
-            <td>${j.title.fr || '—'}</td>
+            <td>${j.title_bi || '—'}</td>
+            <td>${j.title_en || '—'}</td>
+            <td>${j.title_fr || '—'}</td>
             <td>${j.location || '—'}</td>
-            <td><button class="btn btn-danger" onclick="deleteJob(${i})">Delete</button></td>
+            <td><button class="btn btn-danger" onclick="deleteJob(${j.id})">Delete</button></td>
           </tr>
         `;
       });
     }
 
-    function addJob(e) {
+    async function addJob(e) {
       e.preventDefault();
-      const jobs = getData('jobs', []);
-      jobs.push({
-        title: {
-          bi: document.getElementById('job-title-bi').value,
-          en: document.getElementById('job-title-en').value,
-          fr: document.getElementById('job-title-fr').value
-        },
-        req: {
-          bi: document.getElementById('job-req-bi').value,
-          en: document.getElementById('job-req-en').value,
-          fr: document.getElementById('job-req-fr').value
-        },
+      await sb.insert('jobs', {
+        title_bi: document.getElementById('job-title-bi').value,
+        title_en: document.getElementById('job-title-en').value,
+        title_fr: document.getElementById('job-title-fr').value,
+        req_bi: document.getElementById('job-req-bi').value,
+        req_en: document.getElementById('job-req-en').value,
+        req_fr: document.getElementById('job-req-fr').value,
         location: document.getElementById('job-location').value
       });
-      saveData('jobs', jobs);
       document.getElementById('job-form').reset();
-      renderJobs(jobs);
+      loadJobs();
     }
 
-    function deleteJob(index) {
+    async function deleteJob(id) {
       if (!confirm('Delete this job?')) return;
-      const jobs = getData('jobs', []);
-      jobs.splice(index, 1);
-      saveData('jobs', jobs);
-      renderJobs(jobs);
+      await sb.delete('jobs', id);
+      loadJobs();
     }
 
     loadJobs();

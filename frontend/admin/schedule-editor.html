@@ -81,58 +81,52 @@
   </main>
 
   <script src="admin.js"></script>
-  <script>
-    function loadSchedule() {
-      const trips = getData('schedule', [
-        { vessel: 'LC Example 1', from: 'Port Vila', to: 'Tanna', departure: 'Mon 08:00', status: 'on-time' },
-        { vessel: 'LC Example 1', from: 'Tanna', to: 'Erromango', departure: 'Thu 08:00', status: 'on-time' }
-      ]);
-      renderSchedule(trips);
-    }
+<script src="../assets/js/supabase.js"></script>
+<script>
+  async function loadSchedule() {
+    const trips = await sb.get('schedule');
+    renderSchedule(trips);
+  }
 
-    function renderSchedule(trips) {
-      const body = document.getElementById('schedule-body');
-      body.innerHTML = '';
-      trips.forEach((trip, i) => {
-        const statusLabel = { 'on-time': 'On time', 'delayed': 'Delayed', 'cancelled': 'Cancelled' }[trip.status];
-        body.innerHTML += `
-          <tr>
-            <td>${trip.vessel}</td>
-            <td>${trip.from}</td>
-            <td>${trip.to}</td>
-            <td>${trip.departure}</td>
-            <td><span class="status ${trip.status}">${statusLabel}</span></td>
-            <td><button class="btn btn-danger" onclick="deleteTrip(${i})">Delete</button></td>
-          </tr>
-        `;
-      });
-    }
+  function renderSchedule(trips) {
+    const body = document.getElementById('schedule-body');
+    body.innerHTML = '';
+    trips.forEach((trip) => {
+      const statusLabel = { 'on-time': 'On time', 'delayed': 'Delayed', 'cancelled': 'Cancelled' }[trip.status];
+      body.innerHTML += `
+        <tr>
+          <td>${trip.vessel}</td>
+          <td>${trip.from}</td>
+          <td>${trip.to}</td>
+          <td>${trip.departure}</td>
+          <td><span class="status ${trip.status}">${statusLabel}</span></td>
+          <td><button class="btn btn-danger" onclick="deleteTrip(${trip.id})">Delete</button></td>
+        </tr>
+      `;
+    });
+  }
 
-    function addTrip(e) {
-      e.preventDefault();
-      const trips = getData('schedule', []);
-      trips.push({
-        vessel: document.getElementById('vessel').value,
-        from: document.getElementById('from').value,
-        to: document.getElementById('to').value,
-        departure: document.getElementById('departure').value,
-        status: document.getElementById('status').value
-      });
-      saveData('schedule', trips);
-      document.getElementById('trip-form').reset();
-      renderSchedule(trips);
-    }
-
-    function deleteTrip(index) {
-      if (!confirm('Delete this trip?')) return;
-      const trips = getData('schedule', []);
-      trips.splice(index, 1);
-      saveData('schedule', trips);
-      renderSchedule(trips);
-    }
-
+  async function addTrip(e) {
+    e.preventDefault();
+    await sb.insert('schedule', {
+      vessel: document.getElementById('vessel').value,
+      from: document.getElementById('from').value,
+      to: document.getElementById('to').value,
+      departure: document.getElementById('departure').value,
+      status: document.getElementById('status').value
+    });
+    document.getElementById('trip-form').reset();
     loadSchedule();
-  </script>
+  }
+
+  async function deleteTrip(id) {
+    if (!confirm('Delete this trip?')) return;
+    await sb.delete('schedule', id);
+    loadSchedule();
+  }
+
+  loadSchedule();
+</script>
 
 </body>
 </html>
