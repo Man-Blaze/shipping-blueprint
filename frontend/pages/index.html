@@ -47,10 +47,33 @@
 
   <main role="main">
 
-    <section class="hero">
-      <h1 class="company-name">Example Shipping Co</h1>
-      <p data-i18n="home.tagline">Connecting Vanuatu's Islands</p>
-    </section>
+<section class="hero">
+  <h1 class="company-name">Example Shipping Co</h1>
+  <p data-i18n="home.tagline">Connecting Vanuatu's Islands</p>
+</section>
+
+<section class="slideshow" id="hero-slideshow">
+  <div class="slide active" style="background-image: url('../assets/images/slide-1.jpg');">
+    <div class="slide-caption">MV Uratariki — Serving the Shepherds &amp; Epi</div>
+  </div>
+  <div class="slide" style="background-image: url('../assets/images/slide-2.jpg');">
+    <div class="slide-caption">Port Vila — Star Wharf Departure</div>
+  </div>
+  <div class="slide" style="background-image: url('../assets/images/slide-3.jpg');">
+    <div class="slide-caption">Safety. Service. Reliability.</div>
+  </div>
+  <div class="slide" style="background-image: url('../assets/images/slide-4.jpg');">
+    <div class="slide-caption">Never Give Up</div>
+  </div>
+    <div class="slide" style="background-image: url('../assets/images/slide-5.jpg');">
+    <div class="slide-caption">LC Urata</div>
+  </div>
+
+  <button class="slide-arrow prev" onclick="slidePrev()" aria-label="Previous">‹</button>
+  <button class="slide-arrow next" onclick="slideNext()" aria-label="Next">›</button>
+
+  <div class="slide-dots" id="slide-dots"></div>
+</section>
 
     <section class="card">
       <h2 data-i18n="home.live_status">Where is our ship now?</h2>
