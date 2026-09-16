@@ -1,21 +1,23 @@
 {
   "company": {
-    "name": "Example Shipping Co",
+    "name": "Urata Shipping Limited",
     "tagline": {
-      "bi": "Konektem ol Aelan blong Vanuatu",
-      "en": "Connecting Vanuatu's Islands",
-      "fr": "Connecter les îles du Vanuatu"
+      "bi": "Safety. Service. Reliability.",
+      "en": "Safety. Service. Reliability.",
+      "fr": "Sécurité. Service. Fiabilité."
     },
-    "logo": "logo.png",
+    "slogan": "Never Give Up",
+    "logo": "urata-logo.png",
     "colors": {
-      "primary": "#003366",
-      "secondary": "#FFB800",
-      "accent": "#00A86B"
+      "primary": "#CC0000",
+      "secondary": "#FFFFFF",
+      "accent": "#003366",
+      "text": "#1a1a1a"
     },
-    "phone": "+678 XXXX XXX",
-    "email": "info@example.vu",
-    "facebook": "facebook.com/example",
-    "address": "Port Vila, Vanuatu"
+    "phone": "+678 7787806",
+    "email": "uratashipping@gmail.com",
+    "facebook": "facebook.com/urata.shipping",
+    "address": "Stade, Port Vila, Vanuatu"
   },
   "languages": {
     "default": "bi",
@@ -23,10 +25,20 @@
     "switcher": true
   },
   "vessels": [
-    { "name": "LC Example 1", "type": "LC", "capacity": 120 }
+    { "name": "MV Uratariki", "type": "MV", "nickname": "StormRider", "capacity": 120 },
+    { "name": "MV Apu Tom", "type": "Tug", "capacity": 40 },
+    { "name": "MV Nisis Urata", "type": "Passenger Ferry", "capacity": 150 }
   ],
   "routes": [
-    { "from": "Port Vila", "to": "Tanna", "vessel": "LC Example 1", "days": ["Mon", "Thu"] }
+    { "from": "Port Vila", "to": "Emae", "vessel": "MV Uratariki", "days": ["Tue", "Sun"] },
+    { "from": "Port Vila", "to": "Tongoa", "vessel": "MV Uratariki", "days": ["Tue", "Sun"] },
+    { "from": "Port Vila", "to": "Tongariki", "vessel": "MV Uratariki", "days": ["Tue", "Sun"] },
+    { "from": "Port Vila", "to": "Mataso", "vessel": "MV Uratariki", "days": ["Tue", "Sun"] },
+    { "from": "Port Vila", "to": "Buninga", "vessel": "MV Uratariki", "days": ["Tue", "Sun"] },
+    { "from": "Port Vila", "to": "Makira", "vessel": "MV Uratariki", "days": ["Tue", "Sun"] },
+    { "from": "Port Vila", "to": "Epi (Laman Bay)", "vessel": "MV Uratariki", "days": ["Wed"] },
+    { "from": "Port Vila", "to": "Epi (Port Quimie)", "vessel": "MV Uratariki", "days": ["Wed"] },
+    { "from": "Port Vila", "to": "Luganville", "vessel": "MV Apu Tom", "days": ["Mon", "Thu"] }
   ],
   "features": {
     "liveBoard": true,
