@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Login — Urata Shipping Co</title>
+  <title>Admin Login — Example Shipping Co</title>
   <link rel="stylesheet" href="admin.css">
 </head>
 <body>
@@ -11,7 +11,7 @@
   <div class="login-wrap">
     <div class="login-box">
       <h1>Admin Login</h1>
-      <p>Urata Shipping Co — Content Management</p>
+      <p>Example Shipping Co — Content Management</p>
 
       <form id="login-form" onsubmit="handleLogin(event)">
         <div class="form-group">
@@ -30,10 +30,6 @@
       <p id="login-error" style="color:#dc2626; margin-top:12px; display:none;">
         Wrong username or password.
       </p>
-
-      <p style="margin-top:16px; font-size:13px; color:#666;">
-        Demo: <strong>admin</strong> / <strong>demo123</strong>
-      </p>
     </div>
   </div>
 
@@ -43,8 +39,8 @@
       const user = document.getElementById('username').value.trim();
       const pass = document.getElementById('password').value.trim();
 
-      // Demo credentials (later replaced by real backend)
-      if (user === 'urata_admin' && pass === 'YourStrongPassword123!') {
+      // Demo credentials
+      if (user === 'admin' && pass === 'demo123') {
         localStorage.setItem('admin_logged_in', 'true');
         window.location.href = 'dashboard.html';
       } else {
@@ -52,7 +48,6 @@
       }
     }
 
-    // Auto-redirect if already logged in
     if (localStorage.getItem('admin_logged_in') === 'true') {
       window.location.href = 'dashboard.html';
     }
