@@ -15,6 +15,12 @@ async function renderCompanyName() {
   document.querySelectorAll('.contact-phone').forEach(el => el.textContent = s.phone || '');
   document.querySelectorAll('.contact-email').forEach(el => el.textContent = s.email || '');
   document.querySelectorAll('.contact-facebook').forEach(el => el.textContent = s.facebook || '');
+  document.querySelectorAll('.site-logo').forEach(el => {
+  const url = s.logo_url && s.logo_url.trim();
+  if (url) {
+    el.src = url;
+  }
+});
 }
 
 // ---- SCHEDULE ----
@@ -115,14 +121,32 @@ async function renderJobs() {
   });
 }
 
-// ---- RENDER ALL ----
+
+// ... all render functions ...
+
+async function renderContent() {
+  const rows = await sb.get('content');
+  const lang = i18n.getLang();
+  const map = {};
+  rows.forEach(r => {
+    map[r.key] = r[`value_${lang}`] || r.value_en || r.value_bi || '';
+  });
+
+  document.querySelectorAll('[data-content]').forEach(el => {
+    const key = el.dataset.content;
+    if (map[key]) el.textContent = map[key];
+  });
+}
+
+// ---- RENDER ALL (only ONE) ----
 async function renderAll() {
   await Promise.all([
     renderCompanyName(),
     renderScheduleTable(),
     renderLiveBoard(),
     renderNews(),
-    renderJobs()
+    renderJobs(),
+    renderContent()
   ]);
 }
 

@@ -1,36 +1,35 @@
 <!DOCTYPE html>
 <html lang="bi">
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Example Shipping Co — inter-island cargo and passenger shipping in Vanuatu. Routes to Tanna, Erromango, Epi, Santo.">
-    <meta name="keywords" content="Vanuatu shipping, inter-island, cargo, passenger, Tanna, Santo, Port Vila">
-    <meta name="author" content="Example Shipping Co">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="About Urata Shipping Limited — inter-island cargo and passenger shipping in Vanuatu.">
+  <meta name="keywords" content="Urata Shipping, Vanuatu, about, inter-island, cargo, passenger">
+  <meta name="author" content="Urata Shipping Limited">
 
-    <!-- Open Graph (Facebook) -->
-    <meta property="og:title" content="Example Shipping Co — Connecting Vanuatu's Islands">
-    <meta property="og:description" content="Inter-island cargo and passenger shipping in Vanuatu.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://example.vu">
-    <meta property="og:image" content="../assets/og-image.png">
+  <meta property="og:title" content="About — Urata Shipping Limited">
+  <meta property="og:description" content="Our story — 20+ years serving Vanuatu's islands.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://urata-shipping.netlify.app">
+  <meta property="og:image" content="../assets/images/logo.png">
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Example Shipping Co">
-    <meta name="twitter:description" content="Inter-island shipping in Vanuatu.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About — Urata Shipping Limited">
+  <meta name="twitter:description" content="Our story — 20+ years serving Vanuatu's islands.">
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <link rel="icon" type="image/png" href="../assets/images/logo.png">
 
-    <title>Our story</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    </head>
+  <title>About — Urata Shipping Limited</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
 <body>
 
   <header class="site-header">
     <div class="header-inner">
-      <a href="index.html" class="logo"><span class="company-name">Example Shipping Co</span></a>
-      <nav class="main-nav">
+      <a href="index.html" class="logo">
+        <img src="../assets/images/logo.png" alt="Urata Shipping Logo" class="site-logo">
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
         <a href="index.html" data-i18n="nav.home">Home</a>
         <a href="schedule.html" data-i18n="nav.schedule">Schedule</a>
         <a href="live.html" data-i18n="nav.live">Live Board</a>
@@ -40,24 +39,22 @@
         <a href="about.html" data-i18n="nav.about">About</a>
         <a href="contact.html" data-i18n="nav.contact">Contact</a>
       </nav>
-    <div class="lang-switcher" role="group" aria-label="Language selection">
+      <div class="lang-switcher" role="group" aria-label="Language selection">
         <button data-lang="bi" onclick="i18n.setLang('bi')" aria-label="Switch to Bislama">BI</button>
         <button data-lang="en" onclick="i18n.setLang('en')" aria-label="Switch to English">EN</button>
         <button data-lang="fr" onclick="i18n.setLang('fr')" aria-label="Switch to French">FR</button>
+      </div>
     </div>
   </header>
 
-  <main>
+  <main role="main">
     <section class="card">
-      <h1 data-i18n="nav.about">About Us</h1>
-      <p style="margin-top:16px;">
-        Example Shipping Co has served Vanuatu's islands for over 20 years. We operate
-        landing craft (LC) vessels providing transport for passengers, cargo, and outer-island
-        relief supplies.
+      <h1 data-content="about.title">About Us</h1>
+      <p style="margin-top:16px;" data-content="about.intro">
+        Urata Shipping has served Vanuatu for over 20 years. We carry passengers, cargo, and relief supplies to the islands.
       </p>
-      <p style="margin-top:12px;">
-        We are committed to safe, reliable, and affordable shipping for every community
-        in Vanuatu — from Port Vila to the most remote islands.
+      <p style="margin-top:12px;" data-content="about.mission">
+        We are committed to safe, reliable, and affordable shipping for every community.
       </p>
     </section>
 
@@ -65,16 +62,20 @@
       <h2>Our Vessels</h2>
       <div class="routes-grid">
         <div class="route-card">
-          <h3>LC Example 1</h3>
-          <p><strong>Type:</strong> Landing Craft</p>
-          <p><strong>Capacity:</strong> 120 passengers</p>
-          <p><strong>Routes:</strong> Tanna, Erromango, Epi, Santo</p>
+          <h3>MV Uratariki</h3>
+          <p><strong>Type:</strong> Cargo &amp; Passenger</p>
+          <p><strong>Nickname:</strong> StormRider</p>
+          <p><strong>Routes:</strong> Shepherds, Epi</p>
         </div>
         <div class="route-card">
-          <h3>LC Example 2</h3>
-          <p><strong>Type:</strong> Landing Craft</p>
-          <p><strong>Capacity:</strong> 90 passengers</p>
-          <p><strong>Routes:</strong> Malekula, Ambae, Pentecost</p>
+          <h3>MV Apu Tom</h3>
+          <p><strong>Type:</strong> Tug / Support</p>
+          <p><strong>Routes:</strong> Port Vila, Luganville</p>
+        </div>
+        <div class="route-card">
+          <h3>MV Nisis Urata</h3>
+          <p><strong>Type:</strong> Passenger Ferry</p>
+          <p><strong>Routes:</strong> Port Vila, Santo</p>
         </div>
       </div>
     </section>
@@ -85,6 +86,7 @@
         <li><strong>Safety</strong> — every trip, every time</li>
         <li><strong>Service</strong> — for every island community</li>
         <li><strong>Reliability</strong> — schedules you can trust</li>
+        <li><strong>Never Give Up</strong> — our motto</li>
       </ul>
     </section>
   </main>
@@ -92,32 +94,32 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-col">
-        <h4 class="company-name">Example Shipping Co</h4>
-        <p class="footer-address">Port Vila, Vanuatu</p>
+        <h4 class="company-name">Urata Shipping Limited</h4>
+        <p class="footer-address">Stade, Port Vila, Vanuatu</p>
       </div>
       <div class="footer-col">
         <h4 data-i18n="nav.contact">Contact</h4>
-        <p class="footer-phone">📞 +678 XXXX XXX</p>
-        <p class="footer-email">✉️ info@example.vu</p>
+        <p class="footer-phone">📞 +678 7787806</p>
+        <p class="footer-email">✉️ uratashipping@gmail.com</p>
       </div>
       <div class="footer-col">
         <h4 data-i18n="footer.language">Language</h4>
         <div class="lang-switcher" role="group" aria-label="Language selection">
-            <button data-lang="bi" onclick="i18n.setLang('bi')" aria-label="Switch to Bislama">BI</button>
-            <button data-lang="en" onclick="i18n.setLang('en')" aria-label="Switch to English">EN</button>
-            <button data-lang="fr" onclick="i18n.setLang('fr')" aria-label="Switch to French">FR</button>
+          <button data-lang="bi" onclick="i18n.setLang('bi')" aria-label="Switch to Bislama">BI</button>
+          <button data-lang="en" onclick="i18n.setLang('en')" aria-label="Switch to English">EN</button>
+          <button data-lang="fr" onclick="i18n.setLang('fr')" aria-label="Switch to French">FR</button>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 Example Shipping Co. <span data-i18n="footer.rights">All rights reserved</span>.</p>
+      <p><span class="footer-copyright">© 2026 Urata Shipping Limited</span>. <span data-i18n="footer.rights">All rights reserved</span>.</p>
     </div>
   </footer>
 
-    <script src="../i18n.js"></script>
-    <script src="../assets/js/supabase.js"></script>
-    <script src="../assets/js/app.js"></script>
-    <script src="../assets/js/public-data.js"></script>
+  <script src="../i18n.js"></script>
+  <script src="../assets/js/supabase.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/public-data.js"></script>
 
 </body>
 </html>
