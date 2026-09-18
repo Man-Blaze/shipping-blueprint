@@ -85,10 +85,30 @@ async function renderNews() {
   news.forEach(n => {
     const title = n[`title_${lang}`] || n.title_bi || n.title_en || '';
     const body = n[`body_${lang}`] || n.body_bi || n.body_en || '';
+
+    let media = '';
+
+    if (n.image_url && n.image_url.trim()) {
+      media += `<img src="${n.image_url}" alt="${title}" style="width:100%; max-width:640px; border-radius:8px; margin:12px 0; display:block;">`;
+    }
+
+    if (n.video_url && n.video_url.trim()) {
+      const url = n.video_url.trim();
+      if (url.includes('youtube.com') || url.includes('youtu.be')) {
+        let vid = '';
+        if (url.includes('youtu.be/')) vid = url.split('youtu.be/')[1].split('?')[0];
+        else if (url.includes('v=')) vid = url.split('v=')[1].split('&')[0];
+        media += `<iframe width="100%" height="315" src="https://www.youtube.com/embed/${vid}" frameborder="0" allowfullscreen style="border-radius:8px; margin:12px 0; max-width:640px;"></iframe>`;
+      } else {
+        media += `<a href="${url}" target="_blank" style="color:#CC0000; font-weight:bold; display:inline-block; margin:12px 0;">▶ Watch video</a>`;
+      }
+    }
+
     container.innerHTML += `
-      <article style="border-bottom: 1px solid #e0e4e8; padding-bottom: 16px; margin-bottom: 16px;">
-        <h3 style="color:#003366;">${title}</h3>
-        <p style="color:#666; font-size:13px;">${n.date}</p>
+      <article style="border-bottom: 1px solid #e0e4e8; padding-bottom: 20px; margin-bottom: 20px;">
+        <h3 style="color:#CC0000; margin-bottom:4px;">${title}</h3>
+        <p style="color:#666; font-size:13px; margin-bottom:8px;">${n.date}</p>
+        ${media}
         <p>${body}</p>
       </article>
     `;

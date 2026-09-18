@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="bi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="News article — Example Shipping Co">
+  <meta name="author" content="Example Shipping Co">
+
+  <meta property="og:title" content="Article — Example Shipping Co">
+  <meta property="og:description" content="Read the latest news.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://blueprint-demo.netlify.app">
+  <meta property="og:image" content="../assets/images/logo.png">
+
+  <link rel="icon" type="image/png" href="../assets/images/logo.png">
+
+  <title>Article — Example Shipping Co</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="../assets/images/logo.png" alt="Logo" class="site-logo">
+        <span class="company-name">Example Shipping Co</span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="index.html" data-i18n="nav.home">Home</a>
+        <a href="schedule.html" data-i18n="nav.schedule">Schedule</a>
+        <a href="live.html" data-i18n="nav.live">Live Board</a>
+        <a href="routes.html" data-i18n="nav.routes">Routes</a>
+        <a href="news.html" data-i18n="nav.news">News</a>
+        <a href="jobs.html" data-i18n="nav.jobs">Jobs</a>
+        <a href="about.html" data-i18n="nav.about">About</a>
+        <a href="contact.html" data-i18n="nav.contact">Contact</a>
+      </nav>
+      <div class="lang-switcher" role="group" aria-label="Language selection">
+        <button data-lang="bi" onclick="i18n.setLang('bi')">BI</button>
+        <button data-lang="en" onclick="i18n.setLang('en')">EN</button>
+        <button data-lang="fr" onclick="i18n.setLang('fr')">FR</button>
+      </div>
+    </div>
+  </header>
+
+  <main role="main">
+    <article id="article-content" class="article-full">
+      <p style="text-align:center; color:#888;">Loading article...</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h4 class="company-name">Example Shipping Co</h4>
+        <p class="footer-address">Port Vila, Vanuatu</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="nav.contact">Contact</h4>
+        <p class="footer-phone">📞 +678 XXXX XXX</p>
+        <p class="footer-email">✉️ info@example.vu</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.language">Language</h4>
+        <div class="lang-switcher" role="group" aria-label="Language selection">
+          <button data-lang="bi" onclick="i18n.setLang('bi')">BI</button>
+          <button data-lang="en" onclick="i18n.setLang('en')">EN</button>
+          <button data-lang="fr" onclick="i18n.setLang('fr')">FR</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p><span class="footer-copyright">© 2026 Example Shipping Co</span>. <span data-i18n="footer.rights">All rights reserved</span>.</p>
+    </div>
+  </footer>
+
+  <script src="../i18n.js"></script>
+  <script src="../assets/js/supabase.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    // Load and render the article
+    async function loadArticle() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      const container = document.getElementById('article-content');
+
+      if (!id) {
+        container.innerHTML = '<p style="text-align:center; color:#888;">No article specified.</p>';
+        return;
+      }
+
+      const all = await sb.get('news');
+      const n = all.find(x => String(x.id) === String(id));
+
+      if (!n) {
+        container.innerHTML = '<p style="text-align:center; color:#888;">Article not found.</p>';
+        return;
+      }
+
+      const lang = i18n.getLang();
+      const title = n[`title_${lang}`] || n.title_bi || n.title_en || '';
+      const body = n[`body_${lang}`] || n.body_bi || n.body_en || '';
+      const date = n.date || '';
+      const author = n.author || '';
+      const category = n.category || '';
+
+      document.title = title + ' — Example Shipping Co';
+
+      // Calculate read time
+      const words = body.replace(/<[^>]*>/g, '').split(/\s+/).length;
+      const readTime = Math.max(1, Math.round(words / 200));
+
+      let media = '';
+      if (n.image_url && n.image_url.trim()) {
+        media += `<img src="${n.image_url}" alt="${title}" class="article-hero">`;
+      }
+      if (n.video_url && n.video_url.trim()) {
+        const url = n.video_url.trim();
+        if (url.includes('youtube.com') || url.includes('youtu.be')) {
+          let vid = '';
+          if (url.includes('youtu.be/')) vid = url.split('youtu.be/')[1].split('?')[0];
+          else if (url.includes('v=')) vid = url.split('v=')[1].split('&')[0];
+          media += `<iframe width="100%" height="400" src="https://www.youtube.com/embed/${vid}" frameborder="0" allowfullscreen class="article-video"></iframe>`;
+        }
+      }
+
+      const shareUrl = encodeURIComponent(window.location.href);
+      const shareTitle = encodeURIComponent(title);
+
+      container.innerHTML = `
+        <div class="article-header">
+          ${category ? `<div class="article-category">${category}</div>` : ''}
+          <h1 class="article-title">${title}</h1>
+          <div class="article-meta">
+            ${author ? `<span class="article-author">${author}</span>` : ''}
+            <span class="article-sep">•</span>
+            <span class="article-date">${date}</span>
+            <span class="article-sep">•</span>
+            <span class="article-readtime">${readTime} min read</span>
+          </div>
+          <div class="article-share">
+            <span class="share-label">Share:</span>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" class="share-btn fb" aria-label="Share on Facebook">Facebook</a>
+            <a href="https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}" target="_blank" class="share-btn tw" aria-label="Share on Twitter">Twitter</a>
+            <a href="mailto:?subject=${shareTitle}&body=${shareUrl}" class="share-btn em" aria-label="Share by Email">Email</a>
+            <button onclick="window.print()" class="share-btn pr" aria-label="Print">Print</button>
+            <button onclick="copyLink()" class="share-btn cp" aria-label="Copy link">Copy link</button>
+          </div>
+        </div>
+
+        ${media}
+
+        <div class="article-body">
+          ${body}
+        </div>
+
+        <div class="article-footer">
+          <a href="news.html" class="article-back">← Back to News</a>
+        </div>
+      `;
+    }
+
+    function copyLink() {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copied to clipboard');
+    }
+
+    // Wait for i18n then load
+    window.addEventListener('load', async () => {
+      await i18n.initI18n();
+      loadArticle();
+
+      const originalSetLang = i18n.setLang;
+      i18n.setLang = function(lang) {
+        originalSetLang(lang);
+        loadArticle();
+      };
+    });
+  </script>
+
+</body>
+</html>

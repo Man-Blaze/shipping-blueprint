@@ -25,13 +25,12 @@
   <main class="admin-main">
 
     <div class="admin-card">
-      <h2>🚢 Add / Update Vessel</h2>
-      <form id="live-form" onsubmit="addVessel(event)">
+      <h2 id="form-title">➕ Add Vessel</h2>
+      <form id="live-form" onsubmit="saveVessel(event)">
         <div class="form-group">
           <label>Vessel Name</label>
           <input type="text" id="vessel-name" required placeholder="LC Example 1">
         </div>
-
         <div class="form-group">
           <label>Status</label>
           <select id="vessel-status">
@@ -41,17 +40,14 @@
             <option value="⏸️ Delayed">⏸️ Delayed</option>
           </select>
         </div>
-
         <div class="form-group">
           <label>Current Location</label>
           <input type="text" id="vessel-location" required placeholder="Port Vila">
         </div>
-
         <div class="form-group">
           <label>Next Destination / ETA</label>
           <input type="text" id="vessel-next" required placeholder="Tanna — Mon 08:00">
         </div>
-
         <div class="form-group">
           <label>Dinghy Status</label>
           <select id="vessel-dinghy">
@@ -60,8 +56,8 @@
             <option value="❌ Not running">❌ Not running</option>
           </select>
         </div>
-
-        <button type="submit" class="btn btn-primary">Save Vessel</button>
+        <button type="submit" class="btn btn-primary" id="submit-btn">Add Vessel</button>
+        <button type="button" class="btn" id="cancel-btn" onclick="cancelEdit()" style="display:none; background:#888; color:white;">Cancel</button>
       </form>
     </div>
 
@@ -87,6 +83,8 @@
   <script src="admin.js"></script>
   <script src="../assets/js/supabase.js"></script>
   <script>
+    let editingId = null;
+
     async function loadLive() {
       const vessels = await sb.get('live');
       renderLive(vessels);
@@ -103,23 +101,55 @@
             <td>${v.location}</td>
             <td>${v.next}</td>
             <td>${v.dinghy}</td>
-            <td><button class="btn btn-danger" onclick="deleteVessel(${v.id})">Delete</button></td>
+            <td>
+              <button class="btn" onclick='editVessel(${JSON.stringify(v).replace(/'/g, "&#39;")})' style="background:#FFB800; color:#003366;">Edit</button>
+              <button class="btn btn-danger" onclick="deleteVessel(${v.id})">Delete</button>
+            </td>
           </tr>
         `;
       });
     }
 
-    async function addVessel(e) {
+    async function saveVessel(e) {
       e.preventDefault();
-      await sb.insert('live', {
+      const data = {
         name: document.getElementById('vessel-name').value,
         status: document.getElementById('vessel-status').value,
         location: document.getElementById('vessel-location').value,
         next: document.getElementById('vessel-next').value,
         dinghy: document.getElementById('vessel-dinghy').value
-      });
-      document.getElementById('live-form').reset();
+      };
+
+      if (editingId) {
+        await sb.update('live', editingId, data);
+      } else {
+        await sb.insert('live', data);
+      }
+
+      cancelEdit();
       loadLive();
+    }
+
+    function editVessel(v) {
+      editingId = v.id;
+      document.getElementById('vessel-name').value = v.name;
+      document.getElementById('vessel-status').value = v.status;
+      document.getElementById('vessel-location').value = v.location;
+      document.getElementById('vessel-next').value = v.next;
+      document.getElementById('vessel-dinghy').value = v.dinghy;
+
+      document.getElementById('form-title').textContent = '✏️ Edit Vessel';
+      document.getElementById('submit-btn').textContent = 'Update Vessel';
+      document.getElementById('cancel-btn').style.display = 'inline-block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function cancelEdit() {
+      editingId = null;
+      document.getElementById('live-form').reset();
+      document.getElementById('form-title').textContent = '➕ Add Vessel';
+      document.getElementById('submit-btn').textContent = 'Add Vessel';
+      document.getElementById('cancel-btn').style.display = 'none';
     }
 
     async function deleteVessel(id) {
