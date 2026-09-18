@@ -53,4 +53,55 @@ async function sbDelete(table, id) {
   return res.ok;
 }
 
-window.sb = { get: sbGet, insert: sbInsert, update: sbUpdate, delete: sbDelete };
+async function sbUpload(file, bucket = 'media', folder = '') {
+  // Generate unique filename
+  const ext = file.name.split('.').pop();
+  const name = Date.now() + '-' + Math.random().toString(36).substring(2, 9) + '.' + ext;
+  const path = folder ? `${folder}/${name}` : name;
+
+  // Upload to Supabase Storage
+  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${bucket}/${path}`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': file.type,
+      'x-upsert': 'true'
+    },
+    body: file
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error('Upload failed: ' + err);
+  }
+
+  // Return public URL
+  return `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${path}`;
+}
+
+async function sbDeleteFile(url, bucket = 'media') {
+  // Extract path from URL
+  const marker = `/storage/v1/object/public/${bucket}/`;
+  const idx = url.indexOf(marker);
+  if (idx === -1) return false;
+  const path = url.substring(idx + marker.length);
+
+  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${bucket}/${path}`, {
+    method: 'DELETE',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`
+    }
+  });
+  return res.ok;
+}
+
+window.sb = {
+  get: sbGet,
+  insert: sbInsert,
+  update: sbUpdate,
+  delete: sbDelete,
+  upload: sbUpload,
+  deleteFile: sbDeleteFile
+};

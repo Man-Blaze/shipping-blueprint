@@ -56,9 +56,16 @@
         </div>
 
         <div class="form-group">
-          <label>Image URL (optional)</label>
-          <input type="text" id="news-image" placeholder="https://... or /assets/images/...">
+          <label>Image</label>
+          <div style="display:flex; gap:12px; align-items:center; margin-bottom:8px;">
+            <input type="file" id="news-image-file" accept="image/*" style="flex:1; padding:8px; border:1px solid #e0e4e8; border-radius:8px;">
+            <span id="news-upload-status" style="font-size:13px; color:#888;"></span>
+          </div>
+          <input type="text" id="news-image" placeholder="Or paste URL here">
+          <img id="news-image-preview" style="max-width:200px; margin-top:8px; border-radius:8px; display:none;">
         </div>
+
+
 
         <div class="form-group">
           <label>Video URL (optional — YouTube)</label>
@@ -128,6 +135,42 @@
     // ---- News CRUD ----
     let editingId = null;
 
+    // ---- Image Upload ----
+document.getElementById('news-image-file').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const status = document.getElementById('news-upload-status');
+  status.textContent = '⏳ Uploading...';
+  status.style.color = '#888';
+
+  try {
+    const url = await sb.upload(file, 'media', 'news');
+    document.getElementById('news-image').value = url;
+    showPreview(url);
+    status.textContent = '✅ Uploaded';
+    status.style.color = '#00A86B';
+  } catch (err) {
+    status.textContent = '❌ ' + err.message;
+    status.style.color = '#dc2626';
+  }
+});
+
+// ---- Image URL preview ----
+document.getElementById('news-image').addEventListener('input', (e) => {
+  showPreview(e.target.value);
+});
+
+function showPreview(url) {
+  const img = document.getElementById('news-image-preview');
+  if (url && url.trim()) {
+    img.src = url;
+    img.style.display = 'block';
+  } else {
+    img.style.display = 'none';
+  }
+}
+
     async function loadNews() {
       const news = await sb.get('news');
       news.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -184,7 +227,7 @@
       document.getElementById('news-title').value = n.title_en || n.title_bi || '';
       document.getElementById('news-author').value = n.author || '';
       document.getElementById('news-category').value = n.category || '';
-      document.getElementById('news-image').value = n.image_url || '';
+      document.getElementById('news-image').value = n.image_url || '';showPreview(n.image_url || '');
       document.getElementById('news-video').value = n.video_url || '';
       document.getElementById('news-featured').checked = n.featured || false;
 
@@ -200,6 +243,8 @@
       editingId = null;
       document.getElementById('news-form').reset();
       setBody('');
+      document.getElementById('news-image-preview').style.display = 'none';
+      document.getElementById('news-upload-status').textContent = ''; 
       document.getElementById('form-title').textContent = '📰 Add News';
       document.getElementById('submit-btn').textContent = 'Publish News';
       document.getElementById('cancel-btn').style.display = 'none';
